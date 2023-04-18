@@ -16,7 +16,7 @@ except AttributeError:
 
 # %%
 # Run the sweep of completions, or load from cache
-CACHE_FN = "sweeps_demo_cache_20230416T053723.pkl"
+CACHE_FN = "sweeps_demo_cache_20230416T073236.pkl"
 with open(CACHE_FN, "rb") as file:
     normal_df, patched_df, rich_prompts_df = pickle.load(file)
 
@@ -75,20 +75,28 @@ reduced_joined_filt_df = reduced_joined_df[
 ]
 
 # Plot
+act_names = [
+    "blocks.0.hook_resid_pre",
+    "blocks.4.hook_resid_pre",
+    "blocks.16.hook_resid_pre",
+    "blocks.32.hook_resid_pre",
+    "blocks.40.hook_resid_pre",
+]
 plot_col(
-    reduced_joined_filt_df,
+    reduced_joined_filt_df[reduced_joined_filt_df["act_name"].isin(act_names)],
     "wedding_words_count",
     "Average wedding word count",
     baseline_data=reduced_normal_df,
 )
 plot_col(
-    reduced_joined_filt_df,
+    reduced_joined_filt_df[reduced_joined_filt_df["act_name"].isin(act_names)],
     "loss",
     "Average loss",
     baseline_data=reduced_normal_df,
 )
+coeffs = [-4.0, -1.0, 1.0, 4.0]
 plot_col(
-    reduced_joined_filt_df,
+    reduced_joined_filt_df[reduced_joined_filt_df["coeff"].isin(coeffs)],
     "wedding_words_count",
     "Average wedding word count",
     col_x="act_name",
@@ -96,7 +104,7 @@ plot_col(
     baseline_data=reduced_normal_df,
 )
 plot_col(
-    reduced_joined_filt_df,
+    reduced_joined_filt_df[reduced_joined_filt_df["coeff"].isin(coeffs)],
     "loss",
     "Average loss",
     col_x="act_name",
