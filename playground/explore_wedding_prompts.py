@@ -16,16 +16,10 @@ from algebraic_value_editing import (
     sweeps,
     metrics,
     prompt_utils,
-    completion_utils,
+    utils,
 )
 
-try:
-    from IPython import get_ipython
-
-    get_ipython().run_line_magic("reload_ext", "autoreload")
-    get_ipython().run_line_magic("autoreload", "2")
-except AttributeError:
-    pass
+utils.enable_ipython_reload()
 
 # Disable gradients to save memory during inference
 _ = torch.set_grad_enabled(False)
